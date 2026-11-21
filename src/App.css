@@ -107,3 +107,43 @@ button {
 .error {
   color: #b00020;
 }
+
+.navbar nav {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.page.narrow {
+  max-width: 420px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+
+.form input {
+  padding: 10px;
+  border: 1px solid #cfcabd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.field-error {
+  color: #b00020;
+  font-size: 0.8rem;
+}
