@@ -233,3 +233,49 @@ button:disabled {
   color: #6b6558;
   font-size: 0.8rem;
 }
+
+.panel {
+  background: #fff;
+  border: 1px solid #e5e2da;
+  border-radius: 8px;
+  padding: 4px 16px 16px;
+  margin-bottom: 20px;
+}
+
+.status-box {
+  background: #fff;
+  border: 1px solid #e5e2da;
+  border-radius: 8px;
+  padding: 4px 16px;
+  margin-bottom: 16px;
+}
+
+.product-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e2da;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.badge {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #efe7da;
+  color: #6b6558;
+  font-size: 0.75rem;
+}

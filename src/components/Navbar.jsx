@@ -17,6 +17,8 @@ export default function Navbar() {
       <Link to="/" className="brand">Chennai Craft</Link>
       <nav>
         <Link to="/cart">Cart ({count})</Link>
+        {user?.role === 'CUSTOMER' && <Link to="/seller/apply">Become a seller</Link>}
+        {user?.role === 'SELLER' && <Link to="/seller/products">My shop</Link>}
         {user ? (
           <>
             <span>Hi, {user.name}</span>

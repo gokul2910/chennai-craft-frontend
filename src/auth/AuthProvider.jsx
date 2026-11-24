@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { apiFetch } from '../api/client';
 import { AuthContext } from './authContext';
 
@@ -16,14 +16,22 @@ function loadStored() {
 export default function AuthProvider({ children }) {
   const [auth, setAuth] = useState(loadStored);
 
+  const save = useCallback((next) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    setAuth(next);
+  }, []);
+
+  const logout = useCallback(() => {
+    localStorage.removeItem(STORAGE_KEY);
+    setAuth({ token: null, user: null });
+  }, []);
+
   const login = async (email, password) => {
     const data = await apiFetch('/api/auth/login', {
       method: 'POST',
       body: { email, password },
     });
-    const next = { token: data.token, user: data.user };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    setAuth(next);
+    save({ token: data.token, user: data.user });
   };
 
   const register = async (name, email, password) => {
@@ -34,12 +42,28 @@ export default function AuthProvider({ children }) {
     await login(email, password);
   };
 
-  const logout = () => {
-    localStorage.removeItem(STORAGE_KEY);
-    setAuth({ token: null, user: null });
-  };
+  const refreshUser = useCallback(async () => {
+    if (!auth.token) return;
+    try {
+      const user = await apiFetch('/api/me', { token: auth.token });
+      save({ token: auth.token, user });
+    } catch (err) {
+      if (err.status === 401) logout();
+    }
+  }, [auth.token, save, logout]);
 
-  const value = { token: auth.token, user: auth.user, login, register, logout };
+  useEffect(() => {
+    refreshUser();
+  }, [refreshUser]);
+
+  const value = {
+    token: auth.token,
+    user: auth.user,
+    login,
+    register,
+    logout,
+    refreshUser,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

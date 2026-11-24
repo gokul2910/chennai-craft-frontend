@@ -9,6 +9,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import ProductDetail from './pages/ProductDetail';
 import Register from './pages/Register';
+import SellerApply from './pages/SellerApply';
+import SellerProducts from './pages/SellerProducts';
 import './App.css';
 
 export default function App() {
@@ -26,6 +28,22 @@ export default function App() {
               element={
                 <RequireAuth>
                   <Checkout />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/seller/apply"
+              element={
+                <RequireAuth>
+                  <SellerApply />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/seller/products"
+              element={
+                <RequireAuth roles={['SELLER']}>
+                  <SellerProducts />
                 </RequireAuth>
               }
             />
